@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import { Heart, MessageCircle, Play, Server, Code, Sparkles, Palette, Zap } from 'lucide-react';
+import { Heart, MessageCircle, Play, Server, Code, Sparkles, Palette, Zap, Bot, Cpu, Terminal, ShoppingBag, CreditCard, ShieldCheck } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
 export const Services: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<'social' | 'web' | 'design'>('social');
+  const [activeTab, setActiveTab] = useState<'social' | 'web' | 'design' | 'ai' | 'ecommerce'>('ai');
 
   // 1. Social Media States
   const [selectedPostTheme, setSelectedPostTheme] = useState<'creative' | 'tech' | 'growth'>('creative');
@@ -22,6 +22,26 @@ export const Services: React.FC = () => {
   const [palette, setPalette] = useState<'bvc' | 'midnight' | 'sunset' | 'neon'>('bvc');
   const [elementCount, setElementCount] = useState(4);
   const [shapeStyle, setShapeStyle] = useState<'rounded' | 'squircle' | 'sharp'>('squircle');
+
+  // 4. AI & Automation States
+  const [aiAgentGoal, setAiAgentGoal] = useState<'leads' | 'support' | 'report'>('leads');
+  const [aiEngine, setAiEngine] = useState<'gemini' | 'deepseek' | 'claude'>('gemini');
+  const [aiAutonomy, setAiAutonomy] = useState<number>(4);
+  const [aiStatus, setAiStatus] = useState<'idle' | 'running' | 'done'>('idle');
+  const [aiConsoleLines, setAiConsoleLines] = useState<string[]>([
+    '// Configure your agent and click "Deploy AI Agent"...',
+  ]);
+  const [activeTimeouts, setActiveTimeouts] = useState<any[]>([]);
+
+  // 5. E-commerce States
+  const [ecoTheme, setEcoTheme] = useState<'orange' | 'emerald' | 'indigo'>('orange');
+  const [ecoPlatform, setEcoPlatform] = useState<'shopify' | 'nextjs' | 'woo'>('shopify');
+  const [ecoSupport, setEcoSupport] = useState<'chat' | 'returns' | 'omni'>('chat');
+  const [ecoStatus, setEcoStatus] = useState<'idle' | 'processing' | 'success'>('idle');
+  const [ecoConsoleLines, setEcoConsoleLines] = useState<string[]>([
+    '// Configure branding & press "Run Storefront Test"...',
+  ]);
+  const [ecoTimeouts, setEcoTimeouts] = useState<any[]>([]);
 
   const triggerSocialLike = (theme: 'creative' | 'tech' | 'growth') => {
     if (liked[theme]) {
@@ -111,6 +131,154 @@ export const Services: React.FC = () => {
     }
   };
 
+  const getEngineName = (eng: 'gemini' | 'deepseek' | 'claude') => {
+    if (eng === 'gemini') return 'Gemini 2.5 Flash';
+    if (eng === 'deepseek') return 'DeepSeek R1 (Reasoning)';
+    return 'Claude 3.5 Sonnet';
+  };
+
+  const getAgentGoalName = (goal: 'leads' | 'support' | 'report') => {
+    if (goal === 'leads') return 'Lead Qualification Agent';
+    if (goal === 'support') return '24/7 Customer Support Agent';
+    return 'Automated Weekly Report Agent';
+  };
+
+  const runAiSimulation = () => {
+    if (aiStatus === 'running') return;
+    
+    // Clear any existing timeouts first
+    activeTimeouts.forEach(t => clearTimeout(t));
+    const newTimeouts: any[] = [];
+
+    setAiStatus('running');
+    
+    let steps: string[] = [];
+    if (aiAgentGoal === 'leads') {
+      steps = [
+        `[1/6] 🤖 Initializing Lead Qualifier Agent using ${getEngineName(aiEngine)}...`,
+        `[2/6] 📥 Monitoring Contact Form stream: Capturing new lead submission...`,
+        `[3/6] 🧠 Reasoning: Query: "Need custom CRM built fast". Priority: High. Intent: Web Development.`,
+        `[4/6] ⚙️ Tool Execution: Searching Salesforce database for duplicate CRM accounts...`,
+        `[5/6] 📝 CRM Update: Created new Lead Profile & Opportunity "Brandverse Web Build" (Score: 94/100).`,
+        `[6/6] ✉️ Action: Drafted customized response via Gmail and pinged #sales-alerts on Slack!`,
+        `✔ AI Agent Task Completed successfully! Autonomy level ${aiAutonomy}/5 executed.`
+      ];
+    } else if (aiAgentGoal === 'support') {
+      steps = [
+        `[1/6] 🤖 Initializing Customer Support Agent using ${getEngineName(aiEngine)}...`,
+        `[2/6] 📥 Ticket Recieved: "Can I upgrade my subscription plan immediately?"`,
+        `[3/6] 🧠 Reasoning: User requests checkout links for upgrade. Account: Pro Tier.`,
+        `[4/6] ⚙️ Tool Execution: Fetching Stripe product metadata & client subscription status...`,
+        `[5/6] 💳 Payment Sync: Generated custom Checkout session URL for Enterprise upgrade.`,
+        `[6/6] 💬 Conversation: Sent upgrade link. Response latency: 850ms. Ticket marked solved.`,
+        `✔ AI Agent Task Completed successfully! Autonomy level ${aiAutonomy}/5 executed.`
+      ];
+    } else {
+      steps = [
+        `[1/6] 🤖 Initializing Analytics Reporter Agent using ${getEngineName(aiEngine)}...`,
+        `[2/6] 📥 Trigger: Scheduled Sunday Weekly Revenue & Growth report generation.`,
+        `[3/6] 🧠 Reasoning: Aggregate weekly metrics. Calculate WoW conversions & SEO metrics.`,
+        `[4/6] ⚙️ Tool Execution: Querying Stripe dashboard API & Google Analytics search API...`,
+        `[5/6] 📊 Analysis: Revenue: $48.2k (+12% WoW). Traffic: 18.5k visits (+6% WoW).`,
+        `[6/6] 📁 Action: Compiled PDF report, emailed to C-Suite, and pinned to Slack #board-room.`,
+        `✔ AI Agent Task Completed successfully! Autonomy level ${aiAutonomy}/5 executed.`
+      ];
+    }
+
+    setAiConsoleLines([`> Starting ${getAgentGoalName(aiAgentGoal)} simulation...`]);
+
+    steps.forEach((step, index) => {
+      const t = setTimeout(() => {
+        setAiConsoleLines(prev => [...prev, step]);
+        if (index === steps.length - 1) {
+          setAiStatus('done');
+          confetti({
+            particleCount: 80,
+            spread: 50,
+            origin: { x: 0.35, y: 0.6 },
+            colors: ['#E28717', '#10B981', '#3B82F6']
+          });
+        }
+      }, (index + 1) * 800);
+      newTimeouts.push(t);
+    });
+
+    setActiveTimeouts(newTimeouts);
+  };
+
+  const resetAiSimulation = () => {
+    activeTimeouts.forEach(t => clearTimeout(t));
+    setActiveTimeouts([]);
+    setAiStatus('idle');
+    setAiConsoleLines([
+      '// Configure your agent and click "Deploy AI Agent"...',
+    ]);
+  };
+
+  const getEcoThemeColor = (th: 'orange' | 'emerald' | 'indigo') => {
+    if (th === 'orange') return 'var(--color-orange)';
+    if (th === 'emerald') return '#10B981';
+    return '#6366F1';
+  };
+
+  const getEcoThemeGlow = (th: 'orange' | 'emerald' | 'indigo') => {
+    if (th === 'orange') return 'rgba(226, 135, 23, 0.2)';
+    if (th === 'emerald') return 'rgba(16, 185, 129, 0.2)';
+    return 'rgba(99, 102, 241, 0.2)';
+  };
+
+  const getEcoPlatformName = (pf: 'shopify' | 'nextjs' | 'woo') => {
+    if (pf === 'shopify') return 'Shopify Headless Storefront';
+    if (pf === 'nextjs') return 'Custom Next.js & React App';
+    return 'WooCommerce High-Scale Engine';
+  };
+
+  const runEcoSimulation = () => {
+    if (ecoStatus === 'processing') return;
+
+    ecoTimeouts.forEach(t => clearTimeout(t));
+    const newTimeouts: any[] = [];
+    setEcoStatus('processing');
+
+    const steps = [
+      `[1/5] 🛡️ Opening secure transaction session on Stripe gateway...`,
+      `[2/5] 🔑 Authenticating API keys & verifying secure checkout tokens...`,
+      `[3/5] 📦 Platform sync: Processing cart item (BVC Smart Mug) on ${getEcoPlatformName(ecoPlatform)}...`,
+      `[4/5] ✉️ Order Placed! Automated invoice compiled and emailed to customer.`,
+      `[5/5] 💬 Support Tier active: Post-purchase support agent spawned (${ecoSupport === 'chat' ? 'Live Chat Agent' : ecoSupport === 'returns' ? 'Auto-Returns Bot' : 'Omnichannel Assist'}).`,
+      `✔ Purchase simulated successfully! Transaction complete.`
+    ];
+
+    setEcoConsoleLines(['> Initiating secure e-commerce sandbox transaction...']);
+
+    steps.forEach((step, index) => {
+      const t = setTimeout(() => {
+        setEcoConsoleLines(prev => [...prev, step]);
+        if (index === steps.length - 1) {
+          setEcoStatus('success');
+          confetti({
+            particleCount: 85,
+            spread: 60,
+            origin: { x: 0.35, y: 0.6 },
+            colors: ['#E28717', '#10B981', '#6366F1']
+          });
+        }
+      }, (index + 1) * 800);
+      newTimeouts.push(t);
+    });
+
+    setEcoTimeouts(newTimeouts);
+  };
+
+  const resetEcoSimulation = () => {
+    ecoTimeouts.forEach(t => clearTimeout(t));
+    setEcoTimeouts([]);
+    setEcoStatus('idle');
+    setEcoConsoleLines([
+      '// Configure branding & press "Run Storefront Test"...',
+    ]);
+  };
+
   return (
     <section
       id="services"
@@ -145,6 +313,8 @@ export const Services: React.FC = () => {
             { id: 'social', name: 'Social Media Marketing', icon: <Heart size={16} /> },
             { id: 'web', name: 'Enterprise Web Dev', icon: <Code size={16} /> },
             { id: 'design', name: 'Graphic Designing', icon: <Palette size={16} /> },
+            { id: 'ai', name: 'AI & Automation Agents', icon: <Bot size={16} /> },
+            { id: 'ecommerce', name: 'E-commerce & Branding', icon: <ShoppingBag size={16} /> },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -642,6 +812,481 @@ export const Services: React.FC = () => {
                     }}
                   />
                   <span style={{ fontSize: '0.85rem', fontFamily: 'monospace', fontWeight: 'bold' }}>{elementCount}</span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ================= AI & AUTOMATION TAB ================= */}
+          {activeTab === 'ai' && (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '40px', alignItems: 'center' }} className="grid-2col">
+              {/* Left Column: Interactive Agent Console */}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '16px',
+                  background: '#0B1528',
+                  padding: '24px',
+                  borderRadius: '16px',
+                  border: '1px solid rgba(248, 250, 252, 0.1)',
+                  boxShadow: 'var(--shadow-lg)',
+                }}
+              >
+                {/* Console Header */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#EF4444' }} />
+                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#F59E0B' }} />
+                    <span style={{ width: '10px', height: '10px', borderRadius: '50%', background: '#10B981' }} />
+                  </div>
+                  <span style={{ fontSize: '0.75rem', fontFamily: 'monospace', color: '#64748B', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                    <Terminal size={12} /> agent-orchestrator.sh
+                  </span>
+                </div>
+
+                {/* Console Log Terminal */}
+                <div
+                  style={{
+                    height: '240px',
+                    background: '#050B14',
+                    borderRadius: '8px',
+                    padding: '16px',
+                    fontFamily: 'monospace',
+                    fontSize: '0.825rem',
+                    color: '#F8FAFC',
+                    overflowY: 'auto',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '8px',
+                    border: '1px solid rgba(255, 255, 255, 0.05)',
+                  }}
+                >
+                  {aiConsoleLines.map((line, idx) => {
+                    let color = '#94A3B8'; // default grey
+                    if (line.startsWith('✔')) {
+                      color = '#10B981'; // green for success
+                    } else if (line.startsWith('>')) {
+                      color = '#3B82F6'; // blue for starting command
+                    } else if (line.includes('🤖') || line.includes('🧠')) {
+                      color = '#A78BFA'; // purple for agent action
+                    } else if (line.includes('⚙️') || line.includes('📝') || line.includes('📥')) {
+                      color = '#F59E0B'; // orange/amber for system steps
+                    }
+
+                    return (
+                      <div key={idx} style={{ color, display: 'flex', gap: '10px' }}>
+                        <span style={{ color: '#334155', userSelect: 'none', minWidth: '20px' }}>{idx + 1}</span>
+                        <span>{line}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Performance stats inside agent simulator */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                  <div style={{ background: '#0F1E36', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#64748B', textTransform: 'uppercase', fontWeight: 600 }}>Resolution Speed</div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: 'var(--color-orange)', marginTop: '4px', fontFamily: 'monospace' }}>
+                      {aiStatus === 'running' ? '⏱️ Processing...' : aiStatus === 'done' ? '⚡ 0.85s' : '0.00s'}
+                    </div>
+                  </div>
+                  <div style={{ background: '#0F1E36', padding: '12px', borderRadius: '8px', border: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                    <div style={{ fontSize: '0.75rem', color: '#64748B', textTransform: 'uppercase', fontWeight: 600 }}>Execution Cost</div>
+                    <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#10B981', marginTop: '4px', fontFamily: 'monospace' }}>
+                      {aiStatus === 'running' ? '🪙 Calculating...' : aiStatus === 'done' ? '✓ $0.004' : '$0.000'}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Config Panel & Description */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <Bot style={{ color: 'var(--color-orange)' }} />
+                  AI & Workflow Automation Agents
+                </h3>
+                <p>
+                  We design, build, and deploy custom autonomous AI agents and intelligent integrations that work 24/7 on autopilot. Automate repetitive tasks, scale operations, and reduce manual workloads by up to 85%.
+                </p>
+
+                {/* Control Studio Form */}
+                <div style={{ background: 'var(--bg-surface-glass)', border: '1px solid var(--border-color)', padding: '20px', borderRadius: '14px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  {/* Select Agent Goal */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>1. Select Business Goal:</span>
+                    <select
+                      value={aiAgentGoal}
+                      onChange={(e) => setAiAgentGoal(e.target.value as any)}
+                      disabled={aiStatus === 'running'}
+                      style={{
+                        padding: '10px',
+                        borderRadius: '8px',
+                        border: '2px solid var(--border-color)',
+                        background: 'var(--bg-surface)',
+                        color: 'var(--text-primary)',
+                        fontSize: '0.85rem',
+                        outline: 'none',
+                        cursor: 'pointer',
+                        opacity: aiStatus === 'running' ? 0.6 : 1,
+                      }}
+                    >
+                      <option value="leads">Lead Qualification & CRM Sync</option>
+                      <option value="support">24/7 Customer Support Ticket Solver</option>
+                      <option value="report">Automated Weekly Analytics Reporter</option>
+                    </select>
+                  </div>
+
+                  {/* Model & Autonomy Row */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    {/* Model Engine Selector */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>2. Model Engine:</span>
+                      <select
+                        value={aiEngine}
+                        onChange={(e) => setAiEngine(e.target.value as any)}
+                        disabled={aiStatus === 'running'}
+                        style={{
+                          padding: '10px',
+                          borderRadius: '8px',
+                          border: '2px solid var(--border-color)',
+                          background: 'var(--bg-surface)',
+                          color: 'var(--text-primary)',
+                          fontSize: '0.85rem',
+                          outline: 'none',
+                          cursor: 'pointer',
+                          opacity: aiStatus === 'running' ? 0.6 : 1,
+                        }}
+                      >
+                        <option value="gemini">Gemini 2.5 Flash</option>
+                        <option value="deepseek">DeepSeek R1 (Reasoning)</option>
+                        <option value="claude">Claude 3.5 Sonnet</option>
+                      </select>
+                    </div>
+
+                    {/* Autonomy Level Slider */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>3. Autonomy:</span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', height: '100%' }}>
+                        <input
+                          type="range"
+                          min="1"
+                          max="5"
+                          value={aiAutonomy}
+                          onChange={(e) => setAiAutonomy(parseInt(e.target.value))}
+                          disabled={aiStatus === 'running'}
+                          style={{
+                            flex: 1,
+                            accentColor: 'var(--color-orange)',
+                            cursor: 'pointer',
+                            opacity: aiStatus === 'running' ? 0.6 : 1,
+                          }}
+                        />
+                        <span style={{ fontSize: '0.85rem', fontFamily: 'monospace', fontWeight: 'bold' }}>{aiAutonomy}/5</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div style={{ display: 'flex', gap: '12px', marginTop: '6px' }}>
+                    {aiStatus === 'idle' ? (
+                      <button onClick={runAiSimulation} className="btn-primary" style={{ padding: '10px 18px', fontSize: '0.9rem', flex: 1 }}>
+                        <Cpu size={14} /> Deploy AI Agent
+                      </button>
+                    ) : aiStatus === 'running' ? (
+                      <button disabled className="btn-primary" style={{ padding: '10px 18px', fontSize: '0.9rem', flex: 1, background: '#94A3B8', boxShadow: 'none' }}>
+                        <Zap size={14} className="animate-spin-slow" /> Executing Graph Tools...
+                      </button>
+                    ) : (
+                      <button onClick={resetAiSimulation} className="btn-secondary" style={{ padding: '10px 18px', fontSize: '0.9rem', flex: 1 }}>
+                        Reset Simulation
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                <div style={{ borderLeft: '3px solid var(--color-orange)', paddingLeft: '16px', marginTop: '6px' }}>
+                  <p style={{ fontStyle: 'italic', fontSize: '0.925rem' }}>
+                    "Deploying BVC's lead agent transformed our intake. Leads are pre-qualified and opportunities are created in Salesforce before our team even opens their email."
+                  </p>
+                  <span style={{ fontSize: '0.775rem', fontWeight: 600, display: 'block', marginTop: '4px' }}>
+                    — Julian Vance, COO of NexaScale Logistics
+                  </span>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* ================= E-COMMERCE & BRANDING TAB ================= */}
+          {activeTab === 'ecommerce' && (
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '40px', alignItems: 'center' }} className="grid-2col">
+              {/* Left Column: Storefront Mockup & Checkout Console */}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '20px',
+                }}
+              >
+                {/* Product Preview Card */}
+                <div
+                  style={{
+                    background: '#0B1528',
+                    padding: '24px',
+                    borderRadius: '20px',
+                    border: '1px solid rgba(248, 250, 252, 0.1)',
+                    boxShadow: 'var(--shadow-lg)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '16px',
+                    position: 'relative',
+                    overflow: 'hidden',
+                  }}
+                >
+                  {/* Decorative background glow based on selected theme */}
+                  <div
+                    style={{
+                      position: 'absolute',
+                      top: '-60px',
+                      right: '-60px',
+                      width: '180px',
+                      height: '180px',
+                      borderRadius: '50%',
+                      background: getEcoThemeColor(ecoTheme),
+                      filter: 'blur(80px)',
+                      opacity: 0.15,
+                      transition: 'background 0.5s ease',
+                    }}
+                  />
+
+                  {/* Header Badge */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                    <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '4px 10px', borderRadius: '20px', background: 'rgba(255,255,255,0.06)', color: 'var(--text-secondary)' }}>
+                      Storefront Preview
+                    </span>
+                    <span style={{ fontSize: '0.75rem', color: '#10B981', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 600 }}>
+                      <ShieldCheck size={14} /> SECURE GATEWAY
+                    </span>
+                  </div>
+
+                  {/* Product Details Row */}
+                  <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                    {/* Simulated Image Placeholder */}
+                    <div
+                      style={{
+                        width: '80px',
+                        height: '80px',
+                        borderRadius: '12px',
+                        background: `linear-gradient(135deg, ${getEcoThemeColor(ecoTheme)} 0%, #0F172A 100%)`,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'background 0.5s ease',
+                      }}
+                    >
+                      <ShoppingBag size={32} style={{ color: '#FFFFFF', opacity: 0.8 }} />
+                    </div>
+
+                    <div style={{ flex: 1 }}>
+                      <h4 style={{ fontSize: '1.1rem', fontWeight: 700, color: '#F8FAFC' }}>BVC Smart Hydration Bottle</h4>
+                      <p style={{ fontSize: '0.8rem', color: '#94A3B8', marginTop: '4px' }}>Vacuum insulated, LED temperature display, automatic sync.</p>
+                    </div>
+                  </div>
+
+                  {/* Price and Brand Styled Buy Button */}
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '16px' }}>
+                    <div>
+                      <span style={{ fontSize: '0.75rem', color: '#64748B', display: 'block' }}>Total Price</span>
+                      <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#F8FAFC', fontFamily: 'monospace' }}>$39.99</span>
+                    </div>
+
+                    <button
+                      onClick={runEcoSimulation}
+                      disabled={ecoStatus === 'processing'}
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '8px',
+                        padding: '12px 24px',
+                        borderRadius: '10px',
+                        fontSize: '0.9rem',
+                        fontWeight: 700,
+                        color: '#FFFFFF',
+                        background: getEcoThemeColor(ecoTheme),
+                        boxShadow: `0 4px 14px ${getEcoThemeGlow(ecoTheme)}`,
+                        border: 'none',
+                        cursor: ecoStatus === 'processing' ? 'not-allowed' : 'pointer',
+                        opacity: ecoStatus === 'processing' ? 0.6 : 1,
+                        transition: 'all 0.3s ease',
+                      }}
+                    >
+                      <CreditCard size={16} />
+                      {ecoStatus === 'processing' ? 'Processing Transaction...' : ecoStatus === 'success' ? 'Simulate Another Purchase' : 'Simulate Purchase'}
+                    </button>
+                  </div>
+                </div>
+
+                {/* Secure Gateway Terminal logs */}
+                <div
+                  style={{
+                    background: '#050B14',
+                    border: '1px solid rgba(255, 255, 255, 0.05)',
+                    borderRadius: '12px',
+                    padding: '14px',
+                  }}
+                >
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <span style={{ fontSize: '0.7rem', color: '#475569', fontFamily: 'monospace' }}>stripe-gateway-api.log</span>
+                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: ecoStatus === 'processing' ? '#F59E0B' : ecoStatus === 'success' ? '#10B981' : '#64748B' }} />
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: 'monospace',
+                      fontSize: '0.775rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '4px',
+                      color: '#94A3B8',
+                      maxHeight: '110px',
+                      overflowY: 'auto',
+                    }}
+                  >
+                    {ecoConsoleLines.map((line, idx) => (
+                      <div key={idx} style={{ color: line.startsWith('✔') ? '#10B981' : line.startsWith('>') ? '#3B82F6' : '#E2E8F0' }}>
+                        {line}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column: Platform Configuration & Description */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                <h3 style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                  <ShoppingBag style={{ color: 'var(--color-orange)' }} />
+                  E-commerce Development, Branding & Support
+                </h3>
+                <p>
+                  We build high-converting e-commerce experiences that fuse luxury brand identities with sub-second page performance. Integrated with secure Stripe/Shopify gateways and automated customer help centers.
+                </p>
+
+                {/* Control Panel Card */}
+                <div style={{ background: 'var(--bg-surface-glass)', border: '1px solid var(--border-color)', padding: '20px', borderRadius: '14px', display: 'flex', flexDirection: 'column', gap: '14px' }}>
+                  {/* Select Branding Theme */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>1. Brand Identity Theme:</span>
+                    <div style={{ display: 'flex', gap: '8px' }}>
+                      {[
+                        { id: 'orange', name: 'BVC Orange', hex: 'var(--color-orange)' },
+                        { id: 'emerald', name: 'Emerald Mint', hex: '#10B981' },
+                        { id: 'indigo', name: 'Cobalt Royal', hex: '#6366F1' },
+                      ].map((t) => (
+                        <button
+                          key={t.id}
+                          disabled={ecoStatus === 'processing'}
+                          onClick={() => setEcoTheme(t.id as any)}
+                          style={{
+                            flex: 1,
+                            padding: '8px',
+                            borderRadius: '8px',
+                            border: '2px solid',
+                            borderColor: ecoTheme === t.id ? t.hex : 'var(--border-color)',
+                            background: ecoTheme === t.id ? `${t.hex}15` : 'transparent',
+                            fontSize: '0.8rem',
+                            fontWeight: 600,
+                            color: 'var(--text-primary)',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '6px',
+                            opacity: ecoStatus === 'processing' ? 0.6 : 1,
+                          }}
+                        >
+                          <span style={{ width: '8px', height: '8px', borderRadius: '50%', background: t.hex }} />
+                          {t.name}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
+                    {/* Platform Selector */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>2. Storefront Engine:</span>
+                      <select
+                        value={ecoPlatform}
+                        onChange={(e) => setEcoPlatform(e.target.value as any)}
+                        disabled={ecoStatus === 'processing'}
+                        style={{
+                          padding: '10px',
+                          borderRadius: '8px',
+                          border: '2px solid var(--border-color)',
+                          background: 'var(--bg-surface)',
+                          color: 'var(--text-primary)',
+                          fontSize: '0.85rem',
+                          outline: 'none',
+                          cursor: 'pointer',
+                          opacity: ecoStatus === 'processing' ? 0.6 : 1,
+                        }}
+                      >
+                        <option value="shopify">Shopify Headless API</option>
+                        <option value="nextjs">Next.js Headless React</option>
+                        <option value="woo">High-Scale WooCommerce</option>
+                      </select>
+                    </div>
+
+                    {/* Support Automation Tier */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-secondary)' }}>3. Support Automation:</span>
+                      <select
+                        value={ecoSupport}
+                        onChange={(e) => setEcoSupport(e.target.value as any)}
+                        disabled={ecoStatus === 'processing'}
+                        style={{
+                          padding: '10px',
+                          borderRadius: '8px',
+                          border: '2px solid var(--border-color)',
+                          background: 'var(--bg-surface)',
+                          color: 'var(--text-primary)',
+                          fontSize: '0.85rem',
+                          outline: 'none',
+                          cursor: 'pointer',
+                          opacity: ecoStatus === 'processing' ? 0.6 : 1,
+                        }}
+                      >
+                        <option value="chat">24/7 Live Chat Bot</option>
+                        <option value="returns">Automated Returns Portal</option>
+                        <option value="omni">Omnichannel Zendesk Sync</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Deploy & Reset */}
+                  <div style={{ display: 'flex', gap: '12px', marginTop: '6px' }}>
+                    {ecoStatus === 'idle' ? (
+                      <button onClick={runEcoSimulation} className="btn-primary" style={{ padding: '10px 18px', fontSize: '0.9rem', flex: 1 }}>
+                        <ShoppingBag size={14} /> Run Storefront Test
+                      </button>
+                    ) : ecoStatus === 'processing' ? (
+                      <button disabled className="btn-primary" style={{ padding: '10px 18px', fontSize: '0.9rem', flex: 1, background: '#94A3B8', boxShadow: 'none' }}>
+                        <Zap size={14} className="animate-spin-slow" /> Connecting API Nodes...
+                      </button>
+                    ) : (
+                      <button onClick={resetEcoSimulation} className="btn-secondary" style={{ padding: '10px 18px', fontSize: '0.9rem', flex: 1 }}>
+                        Reset Store Simulation
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Testimonial Quote */}
+                <div style={{ borderLeft: '3px solid var(--color-orange)', paddingLeft: '16px', marginTop: '6px' }}>
+                  <p style={{ fontStyle: 'italic', fontSize: '0.925rem' }}>
+                    "BVC launched our custom Next.js storefront in 6 weeks. The conversion rate leaped from 1.8% to 4.2% instantly."
+                  </p>
+                  <span style={{ fontSize: '0.775rem', fontWeight: 600, display: 'block', marginTop: '4px' }}>
+                    — Marcus Aureli, Founder of Aura Essentials
+                  </span>
                 </div>
               </div>
             </div>

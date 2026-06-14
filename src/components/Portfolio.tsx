@@ -4,7 +4,7 @@ import { ArrowUpRight, Filter, Globe, Palette, Heart } from 'lucide-react';
 interface Project {
   id: number;
   title: string;
-  category: 'social' | 'web' | 'design';
+  category: 'social' | 'web' | 'design' | 'ai' | 'ecommerce';
   desc: string;
   tag: string;
   stat: string;
@@ -12,7 +12,7 @@ interface Project {
 }
 
 export const Portfolio: React.FC = () => {
-  const [filter, setFilter] = useState<'all' | 'social' | 'web' | 'design'>('all');
+  const [filter, setFilter] = useState<'all' | 'social' | 'web' | 'design' | 'ai' | 'ecommerce'>('all');
 
   const projects: Project[] = [
     {
@@ -68,6 +68,42 @@ export const Portfolio: React.FC = () => {
       tag: 'Graphic Design',
       stat: '12 Kits',
       color: 'linear-gradient(135deg, #7C3AED 0%, #8B5CF6 100%)',
+    },
+    {
+      id: 7,
+      title: 'AutoCRM Agent Orchestrator',
+      category: 'ai',
+      desc: 'Autonomous AI agents automating business customer support and Salesforce lead qualification.',
+      tag: 'AI Automation',
+      stat: '+85% Speed',
+      color: 'linear-gradient(135deg, #10B981 0%, #047857 100%)',
+    },
+    {
+      id: 8,
+      title: 'Apex Market Insights Bot',
+      category: 'ai',
+      desc: 'Real-time Stripe & Analytics data interpreter generating automated weekly executive reports.',
+      tag: 'AI Automation',
+      stat: 'Saved 20h/w',
+      color: 'linear-gradient(135deg, #4F46E5 0%, #7C3AED 100%)',
+    },
+    {
+      id: 9,
+      title: 'Aura Premium Apparels',
+      category: 'ecommerce',
+      desc: 'Headless Shopify store with tailored brand assets and custom checkout experience.',
+      tag: 'E-commerce',
+      stat: '+42% Sales',
+      color: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
+    },
+    {
+      id: 10,
+      title: 'Nova Smart Home Hub',
+      category: 'ecommerce',
+      desc: 'Internationalized multi-currency Next.js storefront integrated with automated support tickets.',
+      tag: 'E-commerce',
+      stat: 'Global Sync',
+      color: 'linear-gradient(135deg, #4F46E5 0%, #3B82F6 100%)',
     },
   ];
 
@@ -128,6 +164,8 @@ export const Portfolio: React.FC = () => {
             { id: 'social', name: 'Social Media Campaigns' },
             { id: 'web', name: 'Enterprise Web Dev' },
             { id: 'design', name: 'Graphic Designing' },
+            { id: 'ai', name: 'AI Automation' },
+            { id: 'ecommerce', name: 'E-commerce' },
           ].map((btn) => (
             <button
               key={btn.id}

@@ -55,7 +55,7 @@ export const Hero: React.FC = () => {
             }}
           >
             <Sparkles size={14} />
-            Enterprise Social, Web & Design Solutions
+            Enterprise Web, AI, E-commerce & Creative Solutions
           </div>
 
           <h1 style={{ textAlign: 'left' }}>

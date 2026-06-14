@@ -252,6 +252,8 @@ export const Contact: React.FC = () => {
                     <option value="social">Social Media Marketing Campaigns</option>
                     <option value="web">Enterprise Web Development (NextJS/TypeScript)</option>
                     <option value="design">Graphic Design & Creative Brand Identity</option>
+                    <option value="ai">AI & Workflow Automation Agents</option>
+                    <option value="ecommerce">E-commerce Development, Branding & Support</option>
                     <option value="all">Unified Brandverse Solution (All Services)</option>
                   </select>
                 </div>

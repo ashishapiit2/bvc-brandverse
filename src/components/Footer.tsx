@@ -169,6 +169,8 @@ export const Footer: React.FC = () => {
               'Social Media Marketing',
               'Enterprise Website Dev',
               'Graphic Designing & Brand Identity',
+              'AI & Automation Agents',
+              'E-commerce & Branding',
               'Performance Analytics & SEO',
               'UI/UX Prototyping',
             ].map((service, idx) => (
