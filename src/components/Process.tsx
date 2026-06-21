@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Shield, Cpu, Award } from 'lucide-react';
+import { Search, Palette, Send, BarChart2 } from 'lucide-react';
 
 interface Step {
   num: string;
@@ -12,27 +12,27 @@ export const Process: React.FC = () => {
   const steps: Step[] = [
     {
       num: '01',
-      title: 'Universe Discovery',
-      desc: 'We map your existing digital coords. We analyze competitors, audience parameters, and load speeds.',
-      icon: <Eye size={20} />,
+      title: 'Research & Insights',
+      desc: 'Understanding stakeholders, objectives, audience behaviour, and communication needs.',
+      icon: <Search size={20} />,
     },
     {
       num: '02',
-      title: 'High-Fidelity Design',
-      desc: 'We sketch clean brand layouts, vector hierarchies, color systems, and interactive UI frameworks.',
-      icon: <Shield size={20} />,
+      title: 'Content & Creative Development',
+      desc: 'Creating impactful messaging, IEC materials, campaigns, and visual storytelling assets.',
+      icon: <Palette size={20} />,
     },
     {
       num: '03',
-      title: 'Sub-Second Development',
-      desc: 'We construct compile-ready systems in TypeScript, optimizing layouts shifts and compositor paint layers.',
-      icon: <Cpu size={20} />,
+      title: 'Outreach & Implementation',
+      desc: 'Executing social media campaigns, awareness initiatives, events, and stakeholder engagement activities.',
+      icon: <Send size={20} />,
     },
     {
       num: '04',
-      title: 'Successful Launch',
-      desc: 'We push optimized bundles to edge servers, launch viral campaign loops, and track engagement real-time.',
-      icon: <Award size={20} />,
+      title: 'Monitoring & Impact Assessment',
+      desc: 'Measuring reach, engagement, and outcomes to continuously improve communication effectiveness.',
+      icon: <BarChart2 size={20} />,
     },
   ];
 

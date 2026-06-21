@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowDown, Sparkles, Code, Globe, Palette } from 'lucide-react';
+import { ArrowDown, Sparkles, Globe, Palette, Users, Calendar } from 'lucide-react';
 
 export const Hero: React.FC = () => {
   return (
@@ -55,7 +55,7 @@ export const Hero: React.FC = () => {
             }}
           >
             <Sparkles size={14} />
-            Enterprise Web, AI, E-commerce & Creative Solutions
+            360° Digital Marketing, AI Automation, Social Media & Event Management Solutions
           </div>
 
           <h1 style={{ textAlign: 'left' }}>
@@ -66,13 +66,13 @@ export const Hero: React.FC = () => {
 
           <p
             style={{
-              fontSize: 'clamp(1.1rem, 1rem + 0.5vw, 1.3rem)',
+              fontSize: 'clamp(1rem, 0.95rem + 0.5vw, 1.15rem)',
               lineHeight: 1.6,
-              maxWidth: '600px',
+              maxWidth: '700px',
               color: 'var(--text-secondary)',
             }}
           >
-            At BVC Brandverse Communications, we synthesize high-performance enterprise code, viral social media marketing, and premium graphics into a unified brand growth engine.
+            Brandverse Communications is a leading communication and marketing agency specializing in social media management, digital marketing, creative design, IEC material development, branding, content creation, and end-to-end event management services. We help government organizations, corporate brands, NGOs, and businesses build meaningful connections through impactful campaigns, innovative storytelling, and audience-focused communication strategies.
           </p>
 
           {/* CTAs */}
@@ -201,23 +201,23 @@ export const Hero: React.FC = () => {
         {[
           {
             icon: <Globe size={24} style={{ color: 'var(--color-orange)' }} />,
-            title: '15M+ Reach',
-            desc: 'Targeted brand impressions managed globally.',
-          },
-          {
-            icon: <Code size={24} style={{ color: 'var(--color-orange)' }} />,
-            title: '4.9x Speedups',
-            desc: 'Sub-second performance load for core enterprise sites.',
+            title: '20M+ Audience Reached',
+            desc: 'Through social media campaigns, awareness initiatives, and digital outreach.',
           },
           {
             icon: <Palette size={24} style={{ color: 'var(--color-orange)' }} />,
-            title: '250+ Creatives',
-            desc: 'High-end aesthetic brand guides and designs.',
+            title: '1000+ Creatives Delivered',
+            desc: 'Including IEC materials, branding assets, videos, reports, and campaign collaterals.',
           },
           {
-            icon: <Sparkles size={24} style={{ color: 'var(--color-orange)' }} />,
-            title: '98% Retention',
-            desc: 'Uncompromising developer support & partnership.',
+            icon: <Users size={24} style={{ color: 'var(--color-orange)' }} />,
+            title: '100+ Happy Clients',
+            desc: 'Trusted by government institutions, development organizations, and corporate brands.',
+          },
+          {
+            icon: <Calendar size={24} style={{ color: 'var(--color-orange)' }} />,
+            title: '50+ Events Executed',
+            desc: 'From government conferences and workshops to exhibitions and corporate launches.',
           },
         ].map((card, idx) => (
           <div
